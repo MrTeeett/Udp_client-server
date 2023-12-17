@@ -1,33 +1,38 @@
+// server.h
+
 #ifndef SERVER_H
 #define SERVER_H
-
+#define PI 3.141593
 #include <QUdpSocket>
-#include <QObject>
-#include <QDebug>
 #include <QVector>
-#include <QRandomGenerator>
+#include <QDebug>
 #include <QDataStream>
+
 
 class Server : public QObject
 {
     Q_OBJECT
-
 public:
-    Server();
-    void start();
+    explicit Server(QObject *parent = nullptr);
+
+public slots:
+    void startServer();
+    void sendMessage();
+
+private slots:
+    void readDatagram();
 
 private:
     QUdpSocket *udpSocket;
-    int token;
-    QVector<QHostAddress> clientAddresses;
-    QVector<quint16> clientPorts;
-    QByteArray data;
-
-    void sendTaskToClient(const QHostAddress &clientAddress, quint16 clientPort);
-
-private slots:
-    void readPendingDatagrams();
 };
 
 #endif // SERVER_H
-
+/*quint16 clientPort;
+int taskNumber;
+double totalResult;
+int receivedResults;*/
+/*vvoid slotReadyRead();
+void sendDataToClients();
+void incomingConnection(qintptr socketDescriptor);
+void processResult(double result);
+void sendResultToClients();*/
